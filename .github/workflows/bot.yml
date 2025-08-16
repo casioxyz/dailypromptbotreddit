@@ -1,0 +1,21 @@
+name: Daily Reddit Prompt Bot
+
+on:
+  schedule:
+    - cron: "0 7 * * *"   # 07:00 UTC = 09:00 Berlin
+  workflow_dispatch: {}    # manueller Start möglich
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install deps
+        run: pip install praw openai
+      - name: Run bot
+        run: python bot.py
